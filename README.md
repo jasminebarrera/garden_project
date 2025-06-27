@@ -1,4 +1,4 @@
-# Garden Project :herb:
+# Garden Project :seedling:
 ## Part 1: Exploring the Data
 Perform basic exploratory data analysis of garden datasets.
 Create visuals depicting findings.

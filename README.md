@@ -3,6 +3,9 @@
 Perform basic exploratory data analysis of garden datasets.
 Create visuals depicting findings.
 
+Q1: Which vegetables produced the most? Include top 5.
+A1: 
+
 ## Part 2: Forecasting and machine learning
 Create forecasting and machine learning models to predict
 future harvests and determine which plants will be the most

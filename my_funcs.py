@@ -14,27 +14,41 @@ def show_data_overview(df):
 
     return overview_message
 
-
-def show_vegetable_overview(my_dict):
-    veg_choice = input("What vegetable are you interested in?\n")
-    veg_variety_info = my_dict[veg_choice]
+def show_crop_overview(my_dict):
+    crop_choice = input("What crop are you interested in?\n")
+    crop_variety_info = my_dict[crop_choice]
     
-    return veg_variety_info
+    return crop_variety_info
 
+def is_plural(var):
+    var_is_plural = False
+
+    if var > 1:
+        var_is_plural = True
+
+    return var_is_plural
 
 def show_n_by_col(df, column: str, top_n: int, bottom_n: int):
     top_n = top_n
     bottom_n = bottom_n
 
+    top_is_plural = is_plural(top_n)
+    bottom_is_plural = is_plural(bottom_n)
+
     top_n_vals = df.sort_values(by=[column], ascending=False)[0:top_n]
     bottom_n_vals = df.sort_values(by=[column], ascending=True)[0:bottom_n]
 
-    # print(f"\nTop {top_n} Harvested Vegetables: \n{top_n_vals}\n \nBottom {bottom_n} Harvested Vegetables: \n{bottom_n_vals}\n")
+    if top_is_plural:
+        print(f"\nTop {top_n} Harvested Crops:\n", top_n_vals, "\n")
+    else:
+        print(f"\nMost Harvested Crop:\n", top_n_vals, "\n")
+
+    if bottom_is_plural:
+        print(f"\nBottom {bottom_n} Harvested Crops:\n", bottom_n_vals, "\n")
+    else:
+        print(f"\nLeast Harvested Crop:\n", bottom_n_vals, "\n")
 
     return top_n_vals, bottom_n_vals
-    # print(top_n_vals)
-    # print("\n")
-    # print(bottom_n_vals)
 
 
 ### Unnecessary...

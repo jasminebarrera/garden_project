@@ -1,20 +1,17 @@
 # Garden Project :seedling:
-## Part 1: Exploring the Data
+## Part 1: Exploring the data
 Perform basic exploratory data analysis of garden datasets.
-Create visuals depicting findings.
-
-Q1: Which vegetables produced the most? Include top 5.
-A1: 
+Create report with visuals outlining findings.
 
 ## Part 2: Forecasting and machine learning
 Create forecasting and machine learning models to predict
 future harvests and determine which plants will be the most
-profitable. More...
+profitable.
 
-## Part 3:
-Take Kaggle garden dataset and join with succession dataset
+## Part 3: Using SQLalchemy to work with database
+Take Kaggle garden dataset and join with succession dataset in database
 to make app that calculates succession planting dates.
 
-## Part 4:
+## Part 4: Django web app
 Create Django web app putting everything together.
 

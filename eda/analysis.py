@@ -1,78 +1,155 @@
 import pandas as pd
-import eda_funcs as edaf
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from eda_funcs import missing_data_overview, get_col_dtypes
 
 # SETTINGS
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
 
 ### IMPORT AND INSPECT DATA
-# Load the data
-spending_df = pd.read_csv("../garden_data/spending_2020.csv")
-planting_df = pd.read_csv("../garden_data/planting_2020.csv")
-harvesting_df = pd.read_csv("../garden_data/harvest_2020.csv")
+# Read in the data
+spending_data = pd.read_csv('../garden_data/spending_2020.csv')
+planting_data = pd.read_csv('../garden_data/planting_2020.csv')
+harvesting_data = pd.read_csv('../garden_data/harvest_2020.csv')
 
-## Spending data
-# Get data shape
-print(spending_df.shape)
 
-# Get data types
-print(spending_df.dtypes)
-
-# Look over missing data
-print(spending_df.isnull().sum().sum())
-print(spending_df.isnull().sum())
-
-# ## Planting data
-# print(planting_df.shape)
+### BASIC EDA
+## Spending dataset
 #
+# # Get quick look at data
+# print(spending_data.head(10))
 #
-# ## Harvesting data
-# print(harvesting_df.shape)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Get data shape
-# df_dict = {
-#     "spending_2020": spending_df,
-#     "planting_2020": planting_df,
-#     "harvest_2020": harvesting_df
-# }
+# # Get data shape
+# print(spending_data.shape)
 #
-# for df_name, df in df_dict.items():
-#     row_count = df.shape[0]
-#     column_count = df.shape[1]
+# # Get data types
+# print(spending_data.dtypes)
 #
-#     print(f"{df_name} dataset:\n"
-#           f"{row_count} rows and {column_count} columns.\n")
+# # Check specific data types of columns
+# get_col_dtypes(spending_data)
+#
+# # Look over missing data
+# print(spending_data.isnull().sum().sum())
+# print(spending_data.isnull().sum())
+#
+# # Look further into missing data
+# print(spending_data[spending_data['brand'].isnull()])
+# print(spending_data[spending_data['eggplant_item_number'].isnull()])
+#
+## Planting data
+#
+# # Get quick look at data
+# print(planting_data.head(10))
+#
+# # Get data shape
+# print(planting_data.shape)
+#
+# # Get data types
+# print(planting_data.dtypes)
+#
+# # Check specific data types of columns
+# get_col_dtypes(planting_data)
+#
+# # Look over missing data
+# print(missing_data_overview(planting_data))
+#
+# # Look further into missing data
+# print(planting_data[planting_data['number_seeds_planted'].isnull()])
+# print(planting_data[planting_data['date'].isnull()])
+# print(planting_data[planting_data['number_seeds_exact'].isnull()])
+#
+# # Look at non-null record in mostly NaN column
+# print(planting_data[planting_data['notes'].notnull()])
+#
+## Harvest data
+#
+# # Get quick look at data
+# print(harvesting_data.head(10))
+#
+# # Get data shape
+# print(harvesting_data.shape)
+#
+# # Get data types
+# print(harvesting_data.dtypes)
+#
+# # Check specific data types of columns
+# get_col_dtypes(harvesting_data)
+#
+# # Look over missing data
+# print(missing_data_overview(harvesting_data))
+#
+# Note: no missing data for this dataset...
+#
+# Look into strawberry harvest data to see help decide what to do about strawberry planting missing values:
+# print(harvesting_data[harvesting_data['vegetable'] == 'strawberries'])
 
-# Check for missing values
-# missing_bool_series = pd.isnull(spending_df["eggplant_item_number"])
-# missing_eggplant_item_num_data = spending_df[missing_bool_series]
-# print(missing_eggplant_item_num_data)
-#
-# nmv_bool_series = pd.notnull(planting_df["notes"])
-# nmv_data = planting_df[nmv_bool_series]
-# print(nmv_data)
-#
-# spending_cols_missing = spending_df.columns[spending_df.isnull().any()].tolist()
-# print(spending_cols_missing)
-#
-# planting_cols_missing = planting_df.columns[planting_df.isnull().any()].tolist()
-# print(planting_cols_missing)
 
-# print(len(spending_df))
-# print(spending_df.isnull().sum())
-# print(spending_df.isnull().sum()/len(spending_df)*100)
+### PREPARE AND TRANSFORM DATA
+## Spending dataset
+# Drop columns
+spending_to_drop = ['eggplant_item_number', 'price_with_tax']
+spending_df = spending_data.drop(spending_to_drop, axis=1)
 
-# edaf.get_missing_val_cols(spending_df)
+# Fill in missing values
+spending_df['brand'] = spending_df['brand'].replace(np.nan, 'unknown')
+
+# Rename columns
+spending_df = spending_df.rename(columns={'vegetable': 'item_name'})
+
+
+## Planting dataset
+
+# Drop rows
+i_tomato = planting_data.loc[planting_data['notes'].notnull()].index
+i_strawberry = planting_data.loc[planting_data['date'].isnull()].index
+
+planting_df = planting_data.drop(i_tomato)
+planting_df = planting_df.drop(i_strawberry)
+
+# Drop columns
+planting_df = planting_df.drop(['notes'], axis=1)
+
+# Rename columns
+planting_df = planting_df.rename(columns={'vegetable': 'crop'})
+
+# Change data types
+planting_df['number_seeds_planted'] = planting_df['number_seeds_planted'].astype(int)
+planting_df['date'] = pd.to_datetime(planting_df['date']).dt.date
+
+
+## Harvesting dataset
+
+# Rename columns
+harvesting_df = harvesting_data.rename(columns={'vegetable': 'crop'})
+
+# Change data types
+harvesting_df['date'] = pd.to_datetime(harvesting_df['date']).dt.date
+
+# Check all changes
+## Check changes
+# print(spending_df.head(5))
+# print(get_col_dtypes(spending_df))
+# print(missing_data_overview(spending_df))
+#
+# print(planting_df.head(5))
+# print(get_col_dtypes(planting_df))
+# print(missing_data_overview(planting_df))
+#
+# print(harvesting_df.head(5))
+# print(get_col_dtypes(harvesting_df))
+# print(missing_data_overview(harvesting_df))
+
+
+## Add clean datasets to csv
+# harvesting_df.to_csv('/home/jasmine/Documents/data/harvesting_2020_clean.csv', encoding='utf-8', index=False)
+
+### Analyzing data characteristics
+# sns.histplot(spending_df['price'])
+# plt.show()
+
+
+
+### IN-DEPTH EDA
+

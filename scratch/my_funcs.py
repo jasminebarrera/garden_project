@@ -50,6 +50,19 @@ def show_n_by_col(df, column: str, top_n: int, bottom_n: int):
 
     return top_n_vals, bottom_n_vals
 
+# # Find the unique crops in the dataset
+# # crops = planting_df["crop"].unique()
+# ordered_crops_lower = planting_df['crop'].map(lambda x: x.lower() if isinstance(x,str) else x).sort_values()
+# crops_clean = list(crops_lower_str.unique())
+# crops_clean
+# # clean_df = clean_df['crop'].str.lower()
+# # sorted_crops = clean_df.sort_values()
+# # sorted_crops.dtype
+
+def get_ordered_str_list(df):
+    pass
+
+
 
 ### Unnecessary...
 # class GroupSortedDf:

@@ -1,4 +1,4 @@
-# Garden Project: Exploratory Data Analysis
+# Garden Project Part 1: Exploratory Data Analysis
 
 ---
 

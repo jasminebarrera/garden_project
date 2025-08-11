@@ -132,22 +132,21 @@ harvesting_df['date'] = pd.to_datetime(harvesting_df['date']).dt.date
 # Fix misspellings
 harvesting_df['variety'] = harvesting_df['variety'].str.replace("Cinderella's Carraige", "Cinderella's Carriage")
 
-# Check all changes
 ## Check changes
-# print(spending_df.head(5))
-# print(get_col_dtypes(spending_df))
-# print(missing_data_overview(spending_df))
-#
-# print(planting_df.head(5))
-# print(get_col_dtypes(planting_df))
-# print(missing_data_overview(planting_df))
-#
-# print(harvesting_df.head(5))
-# print(get_col_dtypes(harvesting_df))
-# print(missing_data_overview(harvesting_df))
+print(spending_df.head(5))
+print(get_col_dtypes(spending_df))
+print(missing_data_overview(spending_df))
+
+print(planting_df.head(5))
+print(get_col_dtypes(planting_df))
+print(missing_data_overview(planting_df))
+
+print(harvesting_df.head(5))
+print(get_col_dtypes(harvesting_df))
+print(missing_data_overview(harvesting_df))
 
 
 ## Add clean datasets to csv
-harvesting_df.to_csv('../garden_data/spending_2020_clean.csv', encoding='utf-8', index=False)
-harvesting_df.to_csv('../garden_data/planting_2020_clean.csv', encoding='utf-8', index=False)
+spending_df.to_csv('../garden_data/spending_2020_clean.csv', encoding='utf-8', index=False)
+planting_df.to_csv('../garden_data/planting_2020_clean.csv', encoding='utf-8', index=False)
 harvesting_df.to_csv('../garden_data/harvest_2020_clean.csv', encoding='utf-8', index=False)

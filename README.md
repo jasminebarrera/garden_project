@@ -2,8 +2,8 @@
 
 ## Introduction
 
-Suppose there is a garden web app that allows gardeners to log their garden harvest data.
-The data collected by the web app can help evaluate spending and crop productivity. Although there will likely be some
+Suppose there is a garden app that allows gardeners to log their garden harvest data.
+The data collected by the app can help evaluate spending and crop productivity. Although there will likely be some
 missing, inaccurate, or outlier data logged by the gardener, the analytical findings derived from
 the data can give the user more confidence in garden spending and crop productivity.
 
